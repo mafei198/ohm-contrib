@@ -131,9 +131,9 @@ module Ohm
     # not only before/after :create but also before/after :save
     module Overrides
       def create(*args)
-        puts "in voerrides create.............."
         model = new(*args)
-        model.save
+        model.execute_callback(:before, :create)  if modle.valid?
+        model.execute_callback(:after, :create)  if model.save
         model
       end
     end
@@ -163,15 +163,15 @@ module Ohm
     #
     # If the create succeeds, all after :create callbacks are
     # executed.
+=begin
     def create
-      puts 'in create......'
       execute_callback(:before, :create)  if valid?
 
       super.tap do |is_created|
-        puts "is_created:#{is_created}"
         execute_callback(:after, :create)  if is_created
       end
     end
+=end
 
     # The overridden save of Ohm::Model. It checks if the model
     # is valid, and executes all before :save callbacks.
