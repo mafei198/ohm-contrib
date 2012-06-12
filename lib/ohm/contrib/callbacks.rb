@@ -131,6 +131,7 @@ module Ohm
     # not only before/after :create but also before/after :save
     module Overrides
       def create(*args)
+        puts "in voerrides create.............."
         model = new(*args)
         model.save
         model
