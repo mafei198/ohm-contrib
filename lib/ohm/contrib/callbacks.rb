@@ -130,9 +130,9 @@ module Ohm
     # instead of calling create so that Model.create will call
     # not only before/after :create but also before/after :save
     module Overrides
-      def create(*args)
-        model = new(*args)
-        model.execute_callback(:before, :create)  if modle.valid?
+      def create(atts = {})
+        model = new(atts)
+        model.execute_callback(:before, :create)  if model.valid?
         model.execute_callback(:after, :create)  if model.save
         model
       end
