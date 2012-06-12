@@ -12,7 +12,7 @@ module Ohm
   #    - after_save
   #    - before_delete
   #    - after_delete
-  # 
+  #
   # If you prefer to do a class level declaration that is also possible.
   #
   # @example
@@ -49,7 +49,7 @@ module Ohm
   #       # do something with the ids
   #     end
   #   end
- 
+
   module Callbacks
     def self.included(base)
       base.extend Macros
@@ -124,7 +124,7 @@ module Ohm
         @callbacks ||= Hash.new { |h, k| h[k] = Hash.new { |h, k| h[k] = [] }}
       end
     end
-  
+
     # This module is for class method overrides. As of now
     # it only overrides Ohm::Model::create to force calling save
     # instead of calling create so that Model.create will call
@@ -163,9 +163,11 @@ module Ohm
     # If the create succeeds, all after :create callbacks are
     # executed.
     def create
+      puts 'in create......'
       execute_callback(:before, :create)  if valid?
 
       super.tap do |is_created|
+        puts "is_created:#{is_created}"
         execute_callback(:after, :create)  if is_created
       end
     end
@@ -190,7 +192,7 @@ module Ohm
         execute_callback(:after, :delete)  if is_deleted
       end
     end
-  
+
   protected
     def before_validate() end
     def after_validate()  end
