@@ -132,8 +132,8 @@ module Ohm
     module Overrides
       def create(atts = {})
         model = new(atts)
-        model.execute_callback(:before, :create)  if model.valid?
-        model.execute_callback(:after, :create)  if model.save
+        model.__send__(:execute_callback, :before, :create)  if model.valid?
+        model.__send__(:execute_callback, :after, :create)  if model.save
         model
       end
     end
